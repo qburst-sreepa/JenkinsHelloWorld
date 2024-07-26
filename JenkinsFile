@@ -16,17 +16,5 @@ pipeline{
                 bat "mvn package"
             }
         }
-        stage("consolidate result"){
-        	steps{
-        		input("Do you want to capture results?")
-        		junit'**/target/surefire-reports/TEST-*.xml'
-        		archive'target/*.jar'
-        	}
-        }
-        stage("Email build status"){
-        	steps{
-        		mailbody:"${env.JOB_NAME}-Build#${env.BUILD_NUMBER}-${currentBuild.currentResult}\n\ncheck console output at ${env.BUILD_URL} to view the results"subject:"${env.JOB_NAME}-Build#${env.BUILD_NUMBER}-${currentBuild.currentResult}!!"to:'sreepatsujeev@gmail.com'
-        	}
-        }
     }
 }
